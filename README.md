@@ -2,6 +2,16 @@
 
 ArcNote is managed as a single repository containing frontend, backend, and infrastructure code.
 
+## Local Development
+
+Run the backend server from the repository root:
+
+```bash
+docker compose up --build
+```
+
+The API will be available at `http://localhost:8080`.
+
 ## Repository Layout
 
 ```text
@@ -30,6 +40,7 @@ ArcNote is managed as a single repository containing frontend, backend, and infr
 
 ```text
 backend/
+  Dockerfile
   cmd/api/
   internal/
     domain/
