@@ -4,6 +4,8 @@ import (
 	"log"
 	"net/http"
 	"os"
+
+	httpadapter "github.com/boosun13/ArcNote/backend/internal/adapter/http"
 )
 
 func main() {
@@ -15,31 +17,7 @@ func main() {
 func run() error {
 	addr := serverAddr()
 	log.Printf("ArcNote API starting on http://localhost%s", addr)
-	return http.ListenAndServe(addr, newServer())
-}
-
-func newServer() http.Handler {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			w.WriteHeader(http.StatusMethodNotAllowed)
-			return
-		}
-
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte("ArcNote API is running\n"))
-	})
-	mux.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
-		if r.Method != http.MethodGet {
-			w.WriteHeader(http.StatusMethodNotAllowed)
-			return
-		}
-
-		w.WriteHeader(http.StatusOK)
-		_, _ = w.Write([]byte("ok\n"))
-	})
-
-	return mux
+	return http.ListenAndServe(addr, httpadapter.NewServer())
 }
 
 func serverAddr() string {

@@ -1,37 +1,19 @@
 package main
 
-import (
-	"net/http"
-	"net/http/httptest"
-	"testing"
-)
+import "testing"
 
-func TestNewServerReturnsHealthz(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/healthz", nil)
-	rec := httptest.NewRecorder()
+func TestServerAddrUsesDefaultPort(t *testing.T) {
+	t.Setenv("PORT", "")
 
-	newServer().ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusOK {
-		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
-	}
-
-	if body := rec.Body.String(); body != "ok\n" {
-		t.Fatalf("body = %q, want %q", body, "ok\n")
+	if got := serverAddr(); got != ":8080" {
+		t.Fatalf("serverAddr() = %q, want %q", got, ":8080")
 	}
 }
 
-func TestNewServerReturnsRootMessage(t *testing.T) {
-	req := httptest.NewRequest(http.MethodGet, "/", nil)
-	rec := httptest.NewRecorder()
+func TestServerAddrUsesEnvironmentPort(t *testing.T) {
+	t.Setenv("PORT", "9090")
 
-	newServer().ServeHTTP(rec, req)
-
-	if rec.Code != http.StatusOK {
-		t.Fatalf("status = %d, want %d", rec.Code, http.StatusOK)
-	}
-
-	if body := rec.Body.String(); body != "ArcNote API is running\n" {
-		t.Fatalf("body = %q, want %q", body, "ArcNote API is running\n")
+	if got := serverAddr(); got != ":9090" {
+		t.Fatalf("serverAddr() = %q, want %q", got, ":9090")
 	}
 }
