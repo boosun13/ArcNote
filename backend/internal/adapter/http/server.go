@@ -2,13 +2,17 @@ package httpadapter
 
 import (
 	"net/http"
-
-	studyrecordadapter "github.com/boosun13/ArcNote/backend/internal/adapter/http/studyrecord"
 )
 
-func NewServer() http.Handler {
+type Routes struct {
+	StudyRecord http.Handler
+}
+
+func NewServer(routes Routes) http.Handler {
 	mux := http.NewServeMux()
-	mux.Handle("/study-records", studyrecordadapter.NewHandler())
+	if routes.StudyRecord != nil {
+		mux.Handle("/study-records", routes.StudyRecord)
+	}
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			w.WriteHeader(http.StatusMethodNotAllowed)

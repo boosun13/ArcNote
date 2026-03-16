@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"os"
 
-	httpadapter "github.com/boosun13/ArcNote/backend/internal/adapter/http"
+	"github.com/boosun13/ArcNote/backend/internal/infrastructure/bootstrap"
 )
 
 func main() {
@@ -17,7 +17,7 @@ func main() {
 func run() error {
 	addr := serverAddr()
 	log.Printf("ArcNote API starting on http://localhost%s", addr)
-	return http.ListenAndServe(addr, httpadapter.NewServer())
+	return http.ListenAndServe(addr, bootstrap.NewHTTPServer())
 }
 
 func serverAddr() string {

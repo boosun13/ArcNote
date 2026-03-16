@@ -2,18 +2,22 @@ package studyrecord
 
 import domain "github.com/boosun13/ArcNote/backend/internal/domain/studyrecord"
 
-type CreateInput struct {
+type RecordInput struct {
 	DurationMinutes int
 	Content         string
 	StudiedOn       string
 }
 
-type CreateUseCase struct{}
-
-func NewCreateUseCase() CreateUseCase {
-	return CreateUseCase{}
+type Recorder interface {
+	Execute(input RecordInput) (domain.StudyRecord, error)
 }
 
-func (u CreateUseCase) Execute(input CreateInput) (domain.StudyRecord, error) {
+type RecordStudyUseCase struct{}
+
+func NewRecordStudyUseCase() RecordStudyUseCase {
+	return RecordStudyUseCase{}
+}
+
+func (u RecordStudyUseCase) Execute(input RecordInput) (domain.StudyRecord, error) {
 	return domain.New("temporary-id", input.DurationMinutes, input.Content, input.StudiedOn)
 }

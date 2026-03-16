@@ -14,7 +14,7 @@ type createRequest struct {
 	StudiedOn       string `json:"studiedOn"`
 }
 
-func NewHandler() http.Handler {
+func NewHandler(recorder application.Recorder) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodPost {
 			w.WriteHeader(http.StatusMethodNotAllowed)
@@ -27,8 +27,7 @@ func NewHandler() http.Handler {
 			return
 		}
 
-		useCase := application.NewCreateUseCase()
-		record, err := useCase.Execute(application.CreateInput{
+		record, err := recorder.Execute(application.RecordInput{
 			DurationMinutes: req.DurationMinutes,
 			Content:         req.Content,
 			StudiedOn:       req.StudiedOn,

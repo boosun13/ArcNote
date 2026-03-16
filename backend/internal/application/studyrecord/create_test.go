@@ -3,9 +3,9 @@ package studyrecord
 import "testing"
 
 func TestCreateStudyRecordUseCaseExecute(t *testing.T) {
-	useCase := NewCreateUseCase()
+	useCase := NewRecordStudyUseCase()
 
-	record, err := useCase.Execute(CreateInput{
+	record, err := useCase.Execute(RecordInput{
 		DurationMinutes: 60,
 		Content:         "Go HTTP basics",
 		StudiedOn:       "2026-03-16",
