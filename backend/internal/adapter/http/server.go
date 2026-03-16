@@ -1,9 +1,18 @@
 package httpadapter
 
-import "net/http"
+import (
+	"net/http"
+)
 
-func NewServer() http.Handler {
+type Routes struct {
+	StudyRecord http.Handler
+}
+
+func NewServer(routes Routes) http.Handler {
 	mux := http.NewServeMux()
+	if routes.StudyRecord != nil {
+		mux.Handle("/study-records", routes.StudyRecord)
+	}
 	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if r.Method != http.MethodGet {
 			w.WriteHeader(http.StatusMethodNotAllowed)
