@@ -36,6 +36,11 @@ The API will be available at `http://localhost:8080`.
 - `infra/` owns reproducible infrastructure and deployment definitions.
 - `docs/` keeps architectural decisions close to the codebase.
 
+## Architecture Docs
+
+- `docs/architecture-guidelines.md`: backend の設計方針
+- `docs/backend-layer-mapping.md`: backend の各ファイルがどの層に属するかの対応表
+
 ## Backend Layout
 
 ```text
